@@ -34,8 +34,8 @@ class Pokemon:
                 self.is_knocked_out = True
                 self.knock_out() # calling the knockout method 
             
-    def knock_out(self, health, is_knocked_out):
-        if self.health == 0 or is_knocked_out:
+    def knock_out(self):
+        if self.health == 0:
             is_knocked_out = True
             print(f"{self.name} has been knocked out")
             
@@ -49,10 +49,10 @@ class Pokemon:
         damage = 0
         if self.is_knocked_out:
             print(f"{self.name} is knocked out. Please choose another Pokemon.")
-        if foe.type in type_advantages[self.type]:
+        if foe.pokemon_type in type_advantages[self.pokemon_type]:
             damage = self.level * 2
             foe.lose_health(damage)
-        elif self.type in type_advantages[foe.type]:
+        elif self.pokemon_type in type_advantages[foe.pokemon_type]:
             damage = self.level / 2
             foe.lose_health(damage)
         else:
@@ -64,20 +64,31 @@ class Pokemon:
 
 
 class Trainer:
-    def __init__(self, pokemons, potions, current_pokemon, name):
-        self.pokemons = pokemons
+    def __init__(self, name, pokemon, potions):
         self.potions = potions
-        self.current_pokemon = 0
+        self.pokemon = pokemon
         self.name = name
     
     def potion_heal(self):
-        if self.potions = 0:
+        if self.potions == 0:
             print(f"{self.name} doesn't have any potions left!")
         else:
             print(f"{self.name} used a potion!")
-            self.pokemons[self.current_pokemon].gain_health(20)
+            self.pokemon.gain_health(20)
         
     def trainer_battle(self, trainer_foe):
         print(f"{self.name} has declared a battle with {trainer_foe.name}!")
-        self.pokemons[self.current_pokemon].attack(trainer_foe[trainer_foe.current_pokemon])
+        self.pokemon.attack(trainer_foe.pokemon)
         
+
+piplup = Pokemon("kiki", 3, "Water", 30, 20, False)
+trainer1 = Trainer("emaan", piplup, 3)
+charmander = Pokemon("flame god", 4, "Fire", 40, 25, False)
+trainer2 = Trainer("austin", charmander, 2)
+
+trainer1.trainer_battle(trainer2)
+trainer2.trainer_battle(trainer1)
+trainer1.trainer_battle(trainer2)
+trainer2.trainer_battle(trainer1)
+
+
